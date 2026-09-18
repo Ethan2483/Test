@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveNow Rentals</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+    header, footer { background: #1a1a1a; color: white; text-align: center; padding: 20px; }
+    nav { background: #333; padding: 10px; text-align: center; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    .categories, .models, .booking, .payment, .success { background: #fff; border: 1px solid #ccc; padding: 20px; margin: 20px auto; width: 80%; border-radius: 8px; text-align: center; }
+    .car-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .car { background: rgb(255, 255, 255); border: 1px solid #ddd; border-radius: 8px; width: 200px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
+    .car img { width: 100%; border-radius: 8px 8px 0 0; }
+    .car h4 { margin: 10px 0; }
+    form { display: flex; flex-direction: column; gap: 10px; }
+    input, button { padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #27ae60; color: white; cursor: pointer; }
+    button:hover { background: #219150; }
+  </style> 
+</head>
+<body>
+
+<header>
+  <h1>🚗 DriveNow Rentals</h1>
+  <p>Reliable cars. Affordable prices. Easy booking.</p>
+</header>
+
+<nav>
+  <a href="#">Home</a>
+  <a href="#">Cars</a>
+  <a href="#">Pricing</a>
+  <a href="#">Contact</a>
+</nav>
+
+<!-- Step 1: Categories -->
+<section class="categories">
+  <h2>Select a Category</h2>
+  <div class="car-grid">
+    <div class="car" onclick="showModels('sedan')"><h4>Sedan</h4></div>
+    <div class="car" onclick="showModels('suv')"><h4>SUV</h4></div>
+    <div class="car" onclick="showModels('convertible')"><h4>Convertible</h4></div>
+  </div>
+</section>
+
+<!-- Step 2: Models -->
+<section class="models" id="modelsSection" style="display:none;">
+  <h2>Select a Car</h2>
+  <div class="car-grid" id="modelsGrid"></div>
+</section>
+
+<!-- Step 3: Booking -->
+<section class="booking" id="bookingForm" style="display:none;">
+  <h2>Book Your Car</h2>
+  <form id="formBooking">
+    <p id="selectedCar"></p>
+    <label>From Date:</label>
+    <input type="date" id="fromDate" required>
+    <label>To Date:</label>
+    <input type="date" id="toDate" required>
+    <button type="submit">Proceed to Payment</button>
+  </form>
+</section>
+
+<!-- Step 4: Payment -->
+<section class="payment" id="paymentSection" style="display:none;">
+  <h2>Payment</h2>
+  <form id="formPayment">
+    <label>Card Number:</label>
+    <input type="text" placeholder="1234 5678 9012 3456" required>
+    <label>Expiry Date:</label>
+    <input type="month" required>
+    <label>CVV:</label>
+    <input type="password" maxlength="3" required>
+    <button type="submit">Pay Now</button>
+  </form>
+</section>
+
+<!-- Step 5: Success -->
+<section class="success" id="successPage" style="display:none;">
+  <h1>✅ Successfully Booked!</h1>
+  <p>Your car rental has been confirmed. Thank you for choosing DriveNow Rentals.</p>
+  <button onclick="window.location.reload()">Book Another Car</button>
+</section>
+
+<footer>
+  <p>&copy; 2026 DriveNow Rentals. All rights reserved.</p>
+</footer>
+
+<script>
+  const carsData = {
+    sedan: ["Honda City", "Hyundai Verna", "Toyota Corolla", "Skoda Octavia", "Maruti Ciaz", "Volkswagen Vento"],
+    suv: ["Mahindra XUV700", "Hyundai Creta", "Toyota Fortuner", "Tata Harrier", "Kia Seltos", "MG Hector"],
+    convertible: ["BMW Z4", "Audi A5 Cabriolet", "Mercedes C-Class Cabriolet", "Mini Cooper Convertible", "Jaguar F-Type", "Porsche 718 Boxster"]
+  };
+
+  let chosenCar = "";
+
+  function showModels(category) {
+    const modelsGrid = document.getElementById("modelsGrid");
+    modelsGrid.innerHTML = "";
+    carsData[category].forEach(model => {
+      const div = document.createElement("div");
+      div.className = "car";
+      div.innerHTML = `<img src="https://via.placeholder.com/200x120" alt="${model}"><h4>${model}</h4>`;
+      div.onclick = () => selectCar(model);
+      modelsGrid.appendChild(div);
+    });
+    document.getElementById("modelsSection").style.display = "block";
+  }
+
+  function selectCar(model) {
+    chosenCar = model;
+    document.getElementById("selectedCar").textContent = "Selected Car: " + model;
+    document.getElementById("bookingForm").style.display = "block";
+  }
+
+  document.getElementById("formBooking").addEventListener("submit", function(e) {
+    e.preventDefault();
+    document.getElementById("paymentSection").style.display = "block";
+  });
+
+  document.getElementById("formPayment").addEventListener("submit", function(e) {
+    e.preventDefault();
+    document.getElementById("modelsSection").style.display = "none";
+    document.getElementById("bookingForm").style.display = "none";
+    document.getElementById("paymentSection").style.display = "none";
+    document.getElementById("successPage").style.display = "block";
+  });
+</script>
+
+</body>
+</html>

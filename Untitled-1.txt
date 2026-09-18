@@ -1,0 +1,42 @@
+**HTML (`index.html`)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Grid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>My Grid</h2>
+
+<div class="grid">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+</div>
+
+</body>
+</html>
+```
+
+**CSS (`style.css`)**
+
+```css
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 10px;
+}
+
+.grid div {
+    padding: 30px;
+    text-align: center;
+    background: lightblue;
+    border: 1px solid black;
+}
+```
